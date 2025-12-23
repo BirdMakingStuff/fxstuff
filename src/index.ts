@@ -11,8 +11,50 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { requestStory } from "./stuff";
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
+
+		const parsedUrl = new URL(request.url);
+		let urlMatch: { category: string; id: number; urlTitle: string } | null = null;
+
+		const m = parsedUrl.pathname.match(/^\/([^\/]+)\/([1-9][0-9]*)\/([^\/]+)\/?$/);
+			if (m) urlMatch = { category: m[1], id: Number(m[2]), urlTitle: m[3] };
+
+		if (!urlMatch) {
+			return new Response('Not Found', { status: 404 });
+		}
+
+		
+		const ua = (request.headers.get('user-agent') || '').toLowerCase();
+		const isDiscord = ua.includes('discord') || ua.includes('discordbot');
+		const isTwitter = ua.includes('twitter') || ua.includes('twitterbot');
+
+		if (isDiscord || isTwitter) {
+			const story = await requestStory(urlMatch.id);
+			const title = story.teaser.title;
+			const description = story.teaser.intro;
+			const image = story.teaser.image.url;
+			const url = new URL(request.url).toString();
+
+			const html = `<!doctype html><html><head>
+			<meta name="theme-color" content="#8d1de8">
+			<meta property="og:title" content="${escapeHtml(title)}"/>
+			<meta property="og:description" content="${escapeHtml(description)}"/>
+			<meta property="og:image" content="${escapeHtml(image)}"/>
+			<meta property="og:url" content="https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}"/>
+			<meta property="og:type" content="website"/>
+			</head><body></body></html>`;
+
+			return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
+		}
+
+		// Redirect to Stuff
+		return Response.redirect(`https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`, 302);
 	},
 } satisfies ExportedHandler<Env>;
+
+function escapeHtml(s: string) {
+	return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/>/g, '&gt;');
+}

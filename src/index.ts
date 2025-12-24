@@ -11,7 +11,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { requestStory } from "./stuff";
+import { getImageSize, requestStory } from "./stuff";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -36,18 +36,32 @@ export default {
 			const title = story.teaser.title;
 			const description = story.teaser.intro;
 			const image = story.teaser.image.url;
-			const url = new URL(request.url).toString();
+			let imageSize = null;
+			if (image) {
+				imageSize = await getImageSize(image);
+			}
 
-			const html = `<!doctype html><html><head>
+			let header = `<!doctype html><html><head>
 			<meta name="theme-color" content="#8d1de8">
 			<meta property="og:title" content="${escapeHtml(title)}"/>
 			<meta property="og:description" content="${escapeHtml(description)}"/>
-			<meta property="og:image" content="${escapeHtml(image)}"/>
 			<meta property="og:url" content="https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}"/>
 			<meta property="og:type" content="website"/>
-			</head><body></body></html>`;
+			<meta property="og:site_name" content="Stuff"/>
+			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
+			`;
 
-			return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
+			if (image) {
+				header += `<meta property="og:image" content="${escapeHtml(image)}"/>`;
+				header += `<meta property="og:image:alt" content="${escapeHtml(story.teaser.image.alt)}"/>`;
+				if (imageSize) {
+					header += `<meta property="og:image:width" content="${imageSize.width}"/><meta property="og:image:height" content="${imageSize.height}"/>`;
+				}
+			}
+
+			header += `</head><body></body></html>`;
+
+			return new Response(header, { headers: { 'content-type': 'text/html; charset=utf-8' } });
 		}
 
 		// Redirect to Stuff

@@ -23,7 +23,7 @@ export async function handleOembed(request: Request): Promise<Response> {
 		author_name: story.author.name,
 		author_url: `https://www.stuff.co.nz${story.author.url}`,
 		provider_name: "FxStuff by BirdMakingStuff",
-		provider_url: "https://birdmakingstuff.nz/fxstuff",
+		provider_url: "https://birdmakingstuff.nz",
 		provider_icon_url: "https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png",
 		title: story.teaser.title,
 		type: "rich",
@@ -37,6 +37,8 @@ export async function handleOembed(request: Request): Promise<Response> {
 		if (imageSize) {
 			oembedResponse.thumbnail_width = imageSize.width;
 			oembedResponse.thumbnail_height = imageSize.height;
+      oembedResponse.width = imageSize.width;
+      oembedResponse.height = imageSize.height;
 		}
 	}
 	

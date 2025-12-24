@@ -55,11 +55,11 @@ export default {
 			<meta property="og:url" content="${storyUrl}"/>
 			<meta property="og:type" content="website"/>
 			<meta property="og:site_name" content="Stuff"/>
-		<meta name="twitter:card" content="summary_large_image"/>
-		<meta name="twitter:title" content="${escapeHtml(title)}"/>
-		<meta name="twitter:description" content="${escapeHtml(description)}"/>
-		<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
-		<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
+			<meta name="twitter:card" content="summary_large_image"/>
+			<meta name="twitter:title" content="${escapeHtml(title)}"/>
+			<meta name="twitter:description" content="${escapeHtml(description)}"/>
+			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
+			<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
 		`;
 
 		if (image) {

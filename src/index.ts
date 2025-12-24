@@ -36,6 +36,11 @@ export default {
 		const isDiscord = ua.includes('discord') || ua.includes('discordbot');
 		const isTwitter = ua.includes('twitter') || ua.includes('twitterbot');
 
+		if (!isDiscord && !isTwitter) {
+			// Probably not a bot, redirect to Stuff
+			return Response.redirect(`https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`, 302);
+		}
+
 		const story = await requestStory(urlMatch.id);
 		const title = story.teaser.title;
 		const description = story.teaser.intro;
@@ -75,9 +80,6 @@ export default {
 		header += `</head><body></body></html>`;
 
 		return new Response(header, { headers: { 'content-type': 'text/html; charset=utf-8' } });
-
-		// Redirect to Stuff
-		// return Response.redirect(`https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`, 302);
 	},
 } satisfies ExportedHandler<Env>;
 

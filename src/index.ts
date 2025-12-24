@@ -45,6 +45,10 @@ export default {
 		const title = story.teaser.title;
 		const description = story.teaser.intro;
 		const image = story.teaser.image.url;
+		const authorName = story.author?.name || '';
+		const authorUrl = story.author?.url || '';
+		const publishedTime = story.publishedDate || '';
+		const updatedTime = story.updatedDate || '';
 		let imageSize = null;
 		if (image) {
 			imageSize = await getImageSize(image);
@@ -60,6 +64,10 @@ export default {
 			<meta property="og:url" content="${storyUrl}"/>
 			<meta property="og:type" content="website"/>
 			<meta property="og:site_name" content="Stuff"/>
+			<meta property="og:updated_time" content="${updatedTime}"/>
+			<meta property="article:author" content="${authorName}"/>
+			<meta property="article:published_time" content="${publishedTime}"/>
+			<meta property="article:modified_time" content="${updatedTime}"/>
 			<meta name="twitter:card" content="summary_large_image"/>
 			<meta name="twitter:title" content="${escapeHtml(title)}"/>
 			<meta name="twitter:description" content="${escapeHtml(description)}"/>

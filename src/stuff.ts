@@ -10,6 +10,17 @@ interface Story {
       url: string;
     }
   }
+  author: {
+    id: string;
+    name: string;
+    jobTitle: string;
+    email: string;
+    biography: string;
+    location: string;
+    url: string;
+  }
+  updatedDate: string; // ISO 8601 date string
+  publishedDate: string; // ISO 8601 date string
 }
 
 export async function requestStory(storyId: number): Promise<Story> {

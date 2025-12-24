@@ -12,11 +12,18 @@
  */
 
 import { getImageSize, requestStory } from "./stuff";
+import { handleOembed } from "./oembed";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 
 		const parsedUrl = new URL(request.url);
+		
+		// Handle oEmbed endpoint
+		if (parsedUrl.pathname === '/oembed') {
+			return handleOembed(request);
+		}
+		
 		let urlMatch: { category: string; id: number; urlTitle: string } | null = null;
 
 		const m = parsedUrl.pathname.match(/^\/([^\/]+)\/([1-9][0-9]*)\/([^\/]+)\/?$/);
@@ -41,14 +48,18 @@ export default {
 				imageSize = await getImageSize(image);
 			}
 
+			const storyUrl = `https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`;
+			const oembedUrl = `${parsedUrl.origin}/oembed?url=${encodeURIComponent(storyUrl)}`;
+			
 			let header = `<!doctype html><html><head>
 			<meta name="theme-color" content="#8d1de8">
 			<meta property="og:title" content="${escapeHtml(title)}"/>
 			<meta property="og:description" content="${escapeHtml(description)}"/>
-			<meta property="og:url" content="https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}"/>
+			<meta property="og:url" content="${storyUrl}"/>
 			<meta property="og:type" content="website"/>
 			<meta property="og:site_name" content="Stuff"/>
 			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
+			<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
 			`;
 
 			if (image) {

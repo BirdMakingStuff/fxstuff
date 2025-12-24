@@ -55,13 +55,18 @@ export default {
 			<meta property="og:url" content="${storyUrl}"/>
 			<meta property="og:type" content="website"/>
 			<meta property="og:site_name" content="Stuff"/>
-			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
-			<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
-			`;
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:title" content="${escapeHtml(title)}"/>
+		<meta name="twitter:description" content="${escapeHtml(description)}"/>
+		<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
+		<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
+		`;
 
 		if (image) {
 			header += `<meta property="og:image" content="${escapeHtml(image)}"/>`;
 			header += `<meta property="og:image:alt" content="${escapeHtml(story.teaser.image.alt)}"/>`;
+			header += `<meta name="twitter:image" content="${escapeHtml(image)}"/>`;
+			header += `<meta name="twitter:image:alt" content="${escapeHtml(story.teaser.image.alt)}"/>`;
 			if (imageSize) {
 				header += `<meta property="og:image:width" content="${imageSize.width}"/><meta property="og:image:height" content="${imageSize.height}"/>`;
 			}

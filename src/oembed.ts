@@ -22,8 +22,8 @@ export async function handleOembed(request: Request): Promise<Response> {
 	const oembedResponse: any = {
 		author_name: story.author.name,
 		author_url: `https://www.stuff.co.nz${story.author.url}`,
-		provider_name: "FxStuff by BirdMakingStuff",
-		provider_url: "https://birdmakingstuff.nz",
+		provider_name: "Stuff",
+		provider_url: "https://stuff.co.nz",
 		provider_icon_url: "https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png",
 		title: story.teaser.title,
 		type: "rich",

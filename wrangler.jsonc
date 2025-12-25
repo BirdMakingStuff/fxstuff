@@ -12,10 +12,6 @@
 	},
 	"routes": [
 		{
-			"pattern": "fxstuff.birdmakingstuff.nz",
-			"custom_domain": true
-		},
-		{
 			"pattern": "fxstuff.co.nz",
 			"custom_domain": true
 		}

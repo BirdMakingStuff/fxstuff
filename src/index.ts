@@ -62,7 +62,7 @@ export default {
 			<meta property="og:title" content="${escapeHtml(title)}"/>
 			<meta property="og:description" content="${escapeHtml(description)}"/>
 			<meta property="og:url" content="${storyUrl}"/>
-			<meta property="og:type" content="website"/>
+			<meta property="og:type" content="article"/>
 			<meta property="og:site_name" content="Stuff"/>
 			<meta property="og:updated_time" content="${updatedTime}"/>
 			<meta property="article:author" content="${authorName}"/>

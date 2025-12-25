@@ -65,14 +65,16 @@ export default {
 			<meta property="og:type" content="article"/>
 			<meta property="og:site_name" content="Stuff"/>
 			<meta property="og:updated_time" content="${updatedTime}"/>
-			<meta property="article:author" content="${authorName}"/>
+			<meta property="article:author" content="https://stuff.co.nz${authorUrl}"/>
 			<meta property="article:published_time" content="${publishedTime}"/>
 			<meta property="article:modified_time" content="${updatedTime}"/>
+			<meta property="article:section" content="${escapeHtml(urlMatch.category)}"/>
 			<meta name="twitter:card" content="summary_large_image"/>
 			<meta name="twitter:title" content="${escapeHtml(title)}"/>
 			<meta name="twitter:description" content="${escapeHtml(description)}"/>
 			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
 			<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
+			<link rel="apple-touch-icon" href="https://www.stuff.co.nz/assets/icon/Favicon-Stuff-Apple-touch-icon-180x180.png"/>
 		`;
 
 		if (image) {

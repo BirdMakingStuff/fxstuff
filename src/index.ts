@@ -72,9 +72,9 @@ export default {
 			<meta name="twitter:card" content="summary_large_image"/>
 			<meta name="twitter:title" content="${escapeHtml(title)}"/>
 			<meta name="twitter:description" content="${escapeHtml(description)}"/>
-			<link href='https://www.stuff.co.nz/assets/icon/Favicon-Stuff-32x32.png' rel='icon' sizes='32x32' type='image/png'>
+			<link href="${parsedUrl.origin}/assets/stuff_logo.png" rel='icon' sizes='32x32' type='image/png'>
 			<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
-			<link rel="apple-touch-icon" href="https://www.stuff.co.nz/assets/icon/Favicon-Stuff-Apple-touch-icon-180x180.png"/>
+			<link rel="apple-touch-icon" href="${parsedUrl.origin}/assets/stuff_logo.png"/>
 		`;
 
 		if (image) {

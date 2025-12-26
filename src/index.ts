@@ -29,7 +29,8 @@ export default {
 		if (m) urlMatch = { category: m[1], id: Number(m[2]), urlTitle: m[3] };
 
 		if (urlMatch === null) {
-			return new Response('Not Found', { status: 404 });
+			// Redirect to the GH repo page
+			return Response.redirect("https://github.com/BirdMakingStuff/fxstuff", 302);
 		}
 
 		const ua = (request.headers.get('user-agent') || '').toLowerCase();

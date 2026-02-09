@@ -14,6 +14,12 @@
 import { getImageSize, requestStory } from './stuff';
 import { handleOembed } from './oembed';
 
+export function parsePath(pathname: string): { category: string; id: number; urlTitle: string } | null {
+	const m = pathname.match(/^\/(.+?)\/([1-9][0-9]*)\/([^\/]+)\/?$/);
+	if (!m) return null;
+	return { category: m[1], id: Number(m[2]), urlTitle: m[3] };
+}
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const parsedUrl = new URL(request.url);
@@ -25,8 +31,8 @@ export default {
 
 		let urlMatch: { category: string; id: number; urlTitle: string } | null = null;
 
-		const m = parsedUrl.pathname.match(/^\/([^\/]+)\/([1-9][0-9]*)\/([^\/]+)\/?$/);
-		if (m) urlMatch = { category: m[1], id: Number(m[2]), urlTitle: m[3] };
+		// Parse the pathname for a category path, numeric article id, and slug.
+		urlMatch = parsePath(parsedUrl.pathname);
 
 		if (urlMatch === null) {
 			// Redirect to the GH repo page

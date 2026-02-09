@@ -46,4 +46,44 @@ describe('End-to-end behavior', () => {
 		const body = await res.text();
 		expect(body).toContain(`<meta property="og:url" content="https://www.stuff.co.nz${path}"/>`);
 	});
+
+	it('handles missing image alt without throwing and emits empty alt meta', async () => {
+		const path = '/business/360923270/asian-retail-chain-goes-liquidation-owing-millions';
+		vi.spyOn(stuff, 'requestStory').mockResolvedValue({
+			teaser: {
+				title: 'Title',
+				intro: 'Intro',
+				image: { id: '1', url: 'https://example.com/image.jpg' }, // alt omitted
+			},
+			author: { id: '1', name: 'Author', jobTitle: '', email: '', biography: '', location: '', url: '/author/1' },
+			publishedDate: '2024-01-01T00:00:00Z',
+			updatedDate: '2024-01-02T00:00:00Z',
+		} as any);
+
+		const req = new Request(`https://example.com${path}`, { headers: { 'user-agent': 'Discordbot/2.0' } });
+		const res = await (worker as any).fetch(req, env, ctx);
+		expect(res.status).toBe(200);
+		const body = await res.text();
+		expect(body).toContain('<meta property="og:image:alt" content=""/>');
+	});
+
+	it('handles null image alt without throwing and emits empty alt meta', async () => {
+		const path = '/business/360923270/asian-retail-chain-goes-liquidation-owing-millions';
+		vi.spyOn(stuff, 'requestStory').mockResolvedValue({
+			teaser: {
+				title: 'Title',
+				intro: 'Intro',
+				image: { id: '1', alt: null, url: 'https://example.com/image.jpg' },
+			},
+			author: { id: '1', name: 'Author', jobTitle: '', email: '', biography: '', location: '', url: '/author/1' },
+			publishedDate: '2024-01-01T00:00:00Z',
+			updatedDate: '2024-01-02T00:00:00Z',
+		} as any);
+
+		const req = new Request(`https://example.com${path}`, { headers: { 'user-agent': 'Discordbot/2.0' } });
+		const res = await (worker as any).fetch(req, env, ctx);
+		expect(res.status).toBe(200);
+		const body = await res.text();
+		expect(body).toContain('<meta property="og:image:alt" content=""/>');
+	});
 });

@@ -35,9 +35,9 @@ export default {
 		urlMatch = parsePath(parsedUrl.pathname);
 
 		if (urlMatch === null) {
-			// Redirect to the GH repo page
-			return Response.redirect("https://github.com/BirdMakingStuff/fxstuff", 302);
-		}
+		// Redirect to the GH repo page
+		return Response.redirect("https://github.com/BirdMakingStuff/fxstuff", 302);
+	}
 
 		const ua = (request.headers.get('user-agent') || '').toLowerCase();
 		const isDiscord = ua.includes('discord') || ua.includes('discordbot');
@@ -100,6 +100,7 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 
-function escapeHtml(s: string) {
-	return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/>/g, '&gt;');
+function escapeHtml(s?: string | null) {
+	const value = s ?? '';
+	return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/>/g, '&gt;');
 }

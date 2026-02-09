@@ -23,4 +23,13 @@ describe('parsePath', () => {
 			urlTitle: 'asian-retail-chain-goes-liquidation-owing-millions',
 		});
 	});
+
+	it('parses editors-picks style paths', () => {
+		const path = '/auckland/editors-picks/7303166/Anti-abortion-group-wins-key-vote';
+		expect(parsePath(path)).toEqual({
+			category: 'auckland/editors-picks',
+			id: 7303166,
+			urlTitle: 'Anti-abortion-group-wins-key-vote',
+		});
+	});
 });

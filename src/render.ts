@@ -83,11 +83,13 @@ function interleaveBodyWithAssets(body: string, assets: storyAsset[] | undefined
 	}
 
 	let out = '';
+	// showAtParagraph: 0 => before the first paragraph
+	const beforeFirst = byParagraph.get(0);
+	if (beforeFirst) out += beforeFirst.join('\n');
 	for (let i = 0; i < paragraphs.length; i++) {
-		const before = byParagraph.get(i); // 0 => before first paragraph
-		if (before) out += before.join('\n');
 		out += paragraphs[i];
-		const after = byParagraph.get(i + 1); // 1 => after first paragraph, etc.
+		// showAtParagraph: 1 => after the first paragraph, etc.
+		const after = byParagraph.get(i + 1);
 		if (after) out += after.join('\n');
 	}
 	// Assets beyond paragraph count go at the end

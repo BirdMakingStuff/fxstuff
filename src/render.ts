@@ -47,12 +47,39 @@ function renderAsset(asset: storyAsset): string {
 		</figure>`;
 	}
 
-	// Video (if the item url points at video content), embeds, quotes, etc.
-	if (type === 'VIDEO' || type === 'YOUTUBE' || type === 'EMBED') {
+	// Video: the playable file lives in item.playback.sources[] (mp4), not item.url
+	if (type === 'VIDEO') {
+		const sources = (asset.item.playback?.sources || [])
+			.filter((s) => s?.url)
+			.map((s) => `<source src="${escapeHtml(s.url)}" type="video/mp4">`)
+			.join('\n\t\t\t\t');
+		const poster = asset.item.poster
+			? ` poster="${escapeHtml(asset.item.poster)}"`
+			: '';
+		const captionText = asset.caption || asset.title || '';
+		const credit2 = asset.creditline ? escapeHtml(asset.creditline) : '';
+		const captionHtml = captionText
+			? `<figcaption>${escapeHtml(captionText)}${credit2 ? ` <span class="credit">${credit2}</span>` : ''}</figcaption>`
+			: '';
 		return `<figure class="story-asset">
-			<video controls preload="none" src="${escapeHtml(asset.item.url)}"></video>
-			${figcaption}
+			<video controls preload="metadata"${poster}>
+				${sources}
+			</video>
+			${captionHtml}
 		</figure>`;
+	}
+
+	// Widgets/other embeds arrive as pre-built HTML (iframes, instagram
+	// blockquotes, interactive calculators, etc) — render as provided.
+	if (type === 'WIDGET') {
+		const html = asset.item.content || '';
+		if (!html) return '';
+		let out = `<div class="story-embed">${html}`;
+		if (asset.caption || asset.title) {
+			out += `<figcaption>${escapeHtml(asset.caption || asset.title)}${asset.creditline ? ` <span class="credit">${escapeHtml(asset.creditline)}</span>` : ''}</figcaption>`;
+		}
+		out += `</div>`;
+		return out;
 	}
 
 	// Fallback: render the asset url as a link with its title
@@ -115,6 +142,9 @@ export function renderArticleHtml(
 	const published = formatPublishedDate(story.publishedDate);
 	const updated = formatPublishedDate(story.updatedDate);
 	const content = interleaveBodyWithAssets(body, assets);
+	const needsInstagramScript = assets.some(
+		(a) => (a.item?.content || '').includes('instagram-media'),
+	);
 
 	return `<!doctype html><html lang="en-NZ"><head>
 	<meta charset="utf-8">
@@ -192,6 +222,14 @@ ${extraHead}
 		figcaption .credit::before {
 			content: '\\2014\\00a0';
 		}
+		.story-embed {
+			margin: 1.75rem 0;
+		}
+		.story-embed iframe, .story-embed video {
+			max-width: 100%;
+		}
+		.story-embed blockquote { margin: 0; }
+		.squareup, .twitter-tweet { margin: 0 auto; }
 		a { color: #8d1de8; }
 		.outbound {
 			display: block;
@@ -217,5 +255,6 @@ ${extraHead}
 		</div>
 		<span class="outbound">Originally published at <a href="${escapeHtml(storyUrl)}">Stuff</a></span>
 	</article>
+	${needsInstagramScript ? `<script async src="https://www.instagram.com/embed.js"></script>` : ''}
 </body></html>`;
 }

@@ -38,10 +38,17 @@ export interface storyAsset {
   creditline?: string;
   source?: string;
   title?: string;
+  caption?: string;
   item: {
     id?: string;
-    url: string;
+    url?: string;
     cropUsed?: string;
+    poster?: string;
+    content?: string; // WIDGET: raw embed HTML (iframe, instagram blockquote, etc)
+    playback?: {
+      preferredFormat?: string;
+      sources?: Array<{ format?: string; url: string }>;
+    };
   };
 }
 

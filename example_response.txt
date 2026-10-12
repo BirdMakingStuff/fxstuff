@@ -1,0 +1,90 @@
+{
+  "id": 96230184,
+  "type": "ARTICLE",
+  "teaser": {
+    "title": "University severs anti-abortion club",
+    "intro": "Auckland University students vote in favor of banning anti-abortion club.",
+    "image": {
+      "id": "96000136",
+      "url": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DfGZQfjEdZd7oKlsiR53VLHvSZExpMzuRmKdwHbkL9PkdwVlzhFxd4CPWxESHGASo8VU2sU3aFTU01JVf6KAOktvUafgo0ADShr6oZf0elVCTYKrHanc7mPytktUAepnCBaAuFXKRgBFqU6UZXE0GtWCTnBRKFwWpNIeCKGrkqq4dinRHMlALINni1zhEFoZgg=="
+    }
+  },
+  "content": {
+    "title": "Auckland University students vote to disaffiliate anti-abortion club",
+    "intro": "Auckland University students vote in favor of banning anti-abortion club.",
+    "url": "/auckland/local-news/auckland-city-harbour-news/96230184/auckland-university-students-vote-to-disaffiliate-antiabortion-club",
+    "urlType": "data",
+    "contentBody": {
+      "body": "<p><p>Auckland University students have voted to abolish an anti-abortion club.</p></p>\n<p><p>About 2700 students participated in an online referendum which asked whether Auckland University Student's Association (AUSA) should disaffiliate the Pro Life Club.</p></p>\n<p><p>About 1600 students voted in favour of the motion and about 1000 voted against.</p></p>\n<p><p>The referendum also questioned whether clubs with a \"similar ideology\" should be banned from affiliating in the future.</p></p>\n<p><p><strong>READ MORE:<br> * <a href=\"https://www.stuff.co.nz/national/95978907/abortion-debate-comes-to-a-head-at-auckland-university-with-referendum-to-disaffiliate-prolife-club\">Abortion debate comes to a head at uni with referendum to disaffiliate pro-life club</a></strong><br> * <a href=\"http://www.stuff.co.nz/auckland/local-news/7041095/Anti-abortion-club-faces-university-ban\"><strong>Anti-abortion club faces university ban</strong></a></p></p>\n<p><p><span style=\"display: none;\"> </span>Results of referenda which did not directly affect AUSA's financial or administrative processes were automatically binding.</p></p>\n<p><p>However, the decision would be finalised after AUSA had sought legal advice regarding concerns raised by members over specifics.</p></p>\n<p><p>AUSA affiliation was largely a symbolic acknowledgement from the student community that it wishes to be associated with that particular organisation.</p></p>\n<p><p>If the motion were to pass, the Pro Life Club would still be eligible to access university space and distribute information on campus, set up a club stall during orientation week, and receive funding.</p></p>\n<p><p>ProLife Auckland co-president Jelena Middleton said last week she was \"dismayed\" to hear about the motion. </p></p>\n<p><p>It raised concerns the group would struggle to get funding and would be restricted in its activities and advertising on campus, she said. </p></p>\n<p><p>Auckland Students for Choice spokeswoman Justine Rose, who was also a member of Campus Feminist Collective, said ProLife had been an \"embarrassment for AUSA for a long time\". </p></p>\n<p><p>The referendum spoke to the wider issue of women's rights to choose, she said.</p></p>\n<p><p>This was the first successful disaffiliation attempt on the group, which had faced the ban several times since its inception in 2010.</p></p>",
+      "assets": [
+        {
+          "type": "IMAGE",
+          "showAtParagraph": 1,
+          "creditline": "ADAM JACOBSON / STUFF",
+          "source": "c-Fairfax-NZ-News",
+          "title": "ProLife Auckland co-president Jelena Middleton says the referendum to disaffiliate the club from the student union came out of the blue.",
+          "item": {
+            "id": "95999410",
+            "url": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DfGZQfjEdZd7oKlsiR53VLHvSZExpMzuRmKdwHbkL9PkuZ4Rb9rfdA52FJ5HFula4yLpkwyrk4H+NgOJGM6t5VWvoUOMSbpD7kf1%2FFo8wQVf++kv0BVQAsV5fV2ErW3sl13LngAq6vi1nw34BvNDn4ncOWJ+kBWtOvn+mc8eJVn9",
+            "cropUsed": "16:9"
+          }
+        },
+        {
+          "type": "IMAGE",
+          "showAtParagraph": 4,
+          "creditline": "ADAM JACOBSON / STUFF",
+          "source": "c-Fairfax-NZ-News",
+          "title": "Auckland Students for Choice spokeswoman Justine Rose says ProLife Auckland is an \"embarrassment\" to the students' association.",
+          "item": {
+            "id": "96000136",
+            "url": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DfGZQfjEdZd7oKlsiR53VLHvSZExpMzuRmKdwHbkL9PkdwVlzhFxd4CPWxESHGASo8VU2sU3aFTU01JVf6KAOkvmtlbfu2M0bRkQ8EUJDy%2FvLYr%2FHxS6OmhazxIXl19JrCak4kN44l5C74jgh+puN+Kudr3r01ia8mDvBDlpqjeX",
+            "cropUsed": "16:9"
+          }
+        }
+      ]
+    }
+  },
+  "byline": "ADAM JACOBSON",
+  "author": [],
+  "metadata": {
+    "source": "Stuff",
+    "sourceName": "Stuff",
+    "logoSource": {
+      "name": "Stuff",
+      "displayName": "Stuff"
+    },
+    "sponsored": false,
+    "keyword": [
+      "NEWS"
+    ],
+    "section": "NZ news",
+    "sectionLabel": {
+      "name": "NZ news",
+      "url": "/nz-news"
+    },
+    "entity": [
+      "Auckland"
+    ],
+    "topic": [
+      "Education"
+    ],
+    "team": [],
+    "sensitivity": "normal",
+    "typeOfWork": [
+      "NEWS"
+    ],
+    "effectiveDate": "2017-08-28T04:02:31Z"
+  },
+  "date": "2017-08-28T04:02:54Z",
+  "updatedDate": "2017-08-28T04:02:54Z",
+  "publishedDate": "2017-08-28T04:02:31Z",
+  "mainPublication": "stuff",
+  "mainPublicationName": "Stuff",
+  "comments": false,
+  "searchIndexed": true,
+  "topicLabel": {
+    "name": "Education",
+    "url": "/topics/education"
+  },
+  "contentAccess": "open"
+}

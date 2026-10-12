@@ -13,6 +13,7 @@
 
 import { getImageSize, requestStory } from './stuff';
 import { handleOembed } from './oembed';
+import { renderArticleHtml } from './render';
 
 export function parsePath(pathname: string): { category: string; id: number; urlTitle: string } | null {
 	const m = pathname.match(/^\/(.+?)\/([1-9][0-9]*)\/([^\/]+)\/?$/);
@@ -21,7 +22,7 @@ export function parsePath(pathname: string): { category: string; id: number; url
 }
 
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const parsedUrl = new URL(request.url);
 
 		// Handle oEmbed endpoint
@@ -44,8 +45,8 @@ export default {
 		const isTwitter = ua.includes('twitter') || ua.includes('twitterbot');
 
 		if (!isDiscord && !isTwitter) {
-			// Probably not a bot, redirect to Stuff
-			return Response.redirect(`https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`, 302);
+			// Regular visitor: render the article here instead of redirecting to Stuff
+			return renderArticleUrl(request, urlMatch);
 		}
 
 		const story = await requestStory(urlMatch.id);
@@ -98,7 +99,61 @@ export default {
 
 		return new Response(header, { headers: { 'content-type': 'text/html; charset=utf-8' } });
 	},
-} satisfies ExportedHandler<Env>;
+}
+
+// Fetches the story and renders the full article page (with embedded og meta)
+async function renderArticleUrl(
+	request: Request,
+	urlMatch: { category: string; id: number; urlTitle: string },
+): Promise<Response> {
+	const storyUrl = `https://www.stuff.co.nz/${urlMatch.category}/${urlMatch.id}/${urlMatch.urlTitle}`;
+	const parsedUrl = new URL(request.url);
+	const story = await requestStory(urlMatch.id);
+
+	const title = story.content?.title || story.teaser.title;
+	const description = story.content?.intro || story.teaser.intro;
+	const image = story.teaser.image?.url;
+	const authorName = story.author?.name || '';
+	const authorUrl = story.author?.url || '';
+	const publishedTime = story.publishedDate || '';
+	const updatedTime = story.updatedDate || '';
+
+	const oembedUrl = `${parsedUrl.origin}/oembed?url=${encodeURIComponent(storyUrl)}`;
+
+	let header = `<meta property="og:title" content="${escapeHtml(title)}"/>
+		<meta property="og:description" content="${escapeHtml(description)}"/>
+		<meta property="og:url" content="${storyUrl}"/>
+		<meta property="og:type" content="article"/>
+		<meta property="og:site_name" content="Stuff"/>
+		<meta property="og:updated_time" content="${updatedTime}"/>
+		<meta property="article:author" content="https://stuff.co.nz${escapeHtml(authorUrl)}"/>
+		<meta property="article:published_time" content="${publishedTime}"/>
+		<meta property="article:modified_time" content="${updatedTime}"/>
+		<meta property="article:section" content="${escapeHtml(urlMatch.category)}"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:title" content="${escapeHtml(title)}"/>
+		<meta name="twitter:description" content="${escapeHtml(description)}"/>
+		<link href="${parsedUrl.origin}/assets/stuff_logo.png" rel='icon' sizes='32x32' type='image/png'>
+		<link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="${escapeHtml(title)}">
+		<link rel="apple-touch-icon" href="${parsedUrl.origin}/assets/stuff_logo.png"/>
+	`;
+
+	if (image) {
+		header += `<meta property="og:image" content="${escapeHtml(image)}"/>`;
+		header += `<meta property="og:image:alt" content="${escapeHtml(story.teaser.image.alt)}"/>`;
+		header += `<meta name="twitter:image" content="${escapeHtml(image)}"/>`;
+		header += `<meta name="twitter:image:alt" content="${escapeHtml(story.teaser.image.alt)}"/>`;
+	}
+
+	return new Response(
+		renderArticleHtml(story, storyUrl, header, urlMatch.category),
+		{
+			headers: {
+				'content-type': 'text/html; charset=utf-8',
+			},
+		},
+	);
+}
 
 function escapeHtml(s?: string | null) {
 	const value = s ?? '';

@@ -1,5 +1,5 @@
 
-interface Story {
+export interface Story {
   type: string;
   teaser: {
     title: string;
@@ -21,6 +21,28 @@ interface Story {
   }
   updatedDate: string; // ISO 8601 date string
   publishedDate: string; // ISO 8601 date string
+  byline?: string;
+  content?: {
+    title?: string;
+    intro?: string;
+    contentBody?: {
+      body?: string;
+      assets?: storyAsset[];
+    };
+  };
+}
+
+export interface storyAsset {
+  type: string;
+  showAtParagraph?: number;
+  creditline?: string;
+  source?: string;
+  title?: string;
+  item: {
+    id?: string;
+    url: string;
+    cropUsed?: string;
+  };
 }
 
 export async function requestStory(storyId: number): Promise<Story> {
